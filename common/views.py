@@ -6,6 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from common.serializers import UserSerializer, CompanySerializer
 from common.models import Company
+from rest_framework import viewsets
 
 User = get_user_model()
 
@@ -26,6 +27,6 @@ class LoginView(generics.GenericAPIView):
             })
         return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-class CompanyCreateView(generics.CreateAPIView):
+class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
