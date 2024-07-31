@@ -17,7 +17,7 @@ class LoginView(generics.GenericAPIView):
     serializer_class = UserSerializer
 
     def post(self, request, *args, **kwargs):
-        user = User.objects.get(username=request.data['username'])
+        user = User.objects.get(email=request.data['email'])
         if user.check_password(request.data['password']):
             refresh = RefreshToken.for_user(user)
             return Response({

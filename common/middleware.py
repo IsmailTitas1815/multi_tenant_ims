@@ -9,9 +9,10 @@ class CompanyMiddleware(MiddlewareMixin):
         if request.user.is_authenticated:
             company = hasattr(request.user, 'company') and request.user.company
             set_current_company(company)
+            if company:
+                self.set_db_connection(company)
         else:
             set_current_company(None)
-
 
     def set_db_connection(self, company):
         db_name = company.database_name

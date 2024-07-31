@@ -4,6 +4,7 @@ from django.db import connection
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from common.models import Company
+from common.utils import run_migrations
 
 @receiver(post_save, sender=Company)
 def create_company_db(sender, instance, created, **kwargs):
@@ -21,3 +22,6 @@ def create_company_db(sender, instance, created, **kwargs):
             'HOST': instance.db_host,
             'PORT': instance.db_port,
         }
+        
+        # Run migrations on the newly created database
+        run_migrations(db_name)
